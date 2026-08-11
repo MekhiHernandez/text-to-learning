@@ -20,12 +20,11 @@ def passage_to_sentences(passage):
         print(f"Error occurred while splitting passage into sentences: {e}")
         return []
 
-def tag_sentence(nlp, sentence):
+def tag_sentence(sentence):
     """
     Tags a sentence using the provided spaCy NLP model.
 
     Args:
-        nlp: The spaCy NLP model.
         sentence (str): The sentence to be tagged.
 
     Returns:
@@ -70,7 +69,7 @@ def parse_document(nlp, document, passage_size=3):
         list: A list of tagged passages.
     """
     spacy_doc = nlp(document)
-    tagged_sentences = [tag_sentence(nlp, sentence) for sentence in spacy_doc.sents]
+    tagged_sentences = [tag_sentence(sentence) for sentence in spacy_doc.sents]
     passages = reform_passages(tagged_sentences, passage_size)
     return passages
 
