@@ -75,7 +75,7 @@ def parse_document(nlp, document, passage_size=3):
     passages = reform_passages(tagged_sentences, passage_size)
     return passages
 
-def choose_mask(passage):
+def choose_mask(passage, seed=None):
     """
     Chooses a verb in the passage to hide for fill-in-the-blank exercises.
     Cannot be the first one in the passage, and cannot be an infinitive.
@@ -89,15 +89,19 @@ def choose_mask(passage):
         index (int): The index of the masked verb in the passage.
     """
     candidates = [token for token in passage if isinstance(token, tuple) and token[2] == "VERB" and token[1] != token[0]]
+
     if len(candidates) < 2:
         return passage, None, None
-    chosen_candidate = random.choice(candidates[1:])
+    
+    rng = random.Random(seed)
+    chosen_candidate = rng.choice(candidates[1:])
     answer = chosen_candidate[0]
     index = passage.index(chosen_candidate)
+
     masked_intermed = [(f"[{chosen_candidate[1]}]" if t == chosen_candidate else t) for t in passage]
     masked_passage = [(t[0] if isinstance(t, tuple) else t) for t in masked_intermed]
     return masked_passage, answer, index
 
 if __name__ == "__main__":
     nlp = spacy.load("es_core_news_sm")
-
+  
