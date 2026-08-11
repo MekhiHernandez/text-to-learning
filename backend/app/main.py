@@ -27,14 +27,19 @@ async def root():
 @app.post("/create_exercises", response_model=ExerciseResponse)
 async def create_exercises(request: ExerciseRequest):
     passages = parse_document(app.state.nlp, request.text, request.passage_size)
+
     exercises = []
     answers = []
+    
+    carry = [] # Carries previous passages as context if no valid verb is found
     for passage in passages:
-        masked, answer, index = choose_mask(passage)
-
+        joined_carry = carry + passage
+        masked, answer, index = choose_mask(joined_carry)
+        
         if answer is None: 
+            carry = joined_carry
             continue
-
+        carry = []
         exercises.append(masked)
         answers.append((index, answer))
     return {"exercises": exercises, "answers": answers}
