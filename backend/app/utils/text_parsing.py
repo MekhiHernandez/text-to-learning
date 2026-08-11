@@ -33,15 +33,14 @@ def tag_sentence(nlp, sentence):
             corresponding part-of-speech tag for verbs, and just the token 
             text for other parts of speech.
     """
-    doc = nlp(sentence)
-    sentence = []
+    doc = sentence.as_doc()
+    sent_out = []
     for token in doc:
         if token.pos_ == "VERB":
-            sentence.append((token.text, token.lemma_, token.pos_))
+            sent_out.append((token.text, token.lemma_, token.pos_))
         else:
-            sentence.append((token.text))
-    sentence.append(("."))
-    return sentence
+            sent_out.append((token.text))
+    return sent_out
 
 def reform_passages(tagged_sentences, passage_size=3):
     """
@@ -70,8 +69,8 @@ def parse_document(nlp, document, passage_size=3):
     Returns:
         list: A list of tagged passages.
     """
-    sentences = passage_to_sentences(document)
-    tagged_sentences = [tag_sentence(nlp, sentence) for sentence in sentences]
+    spacy_doc = nlp(document)
+    tagged_sentences = [tag_sentence(nlp, sentence) for sentence in spacy_doc.sents]
     passages = reform_passages(tagged_sentences, passage_size)
     return passages
 
@@ -104,4 +103,5 @@ def choose_mask(passage, seed=None):
 
 if __name__ == "__main__":
     nlp = spacy.load("es_core_news_sm")
-  
+    parsed = parse_document(nlp, "Hola mundo. Adiós mundo. ¿Cómo estás? Todo bien, gracias a Dios. Espero que estés teniendo un buen día.", 2)
+    print(parsed)
