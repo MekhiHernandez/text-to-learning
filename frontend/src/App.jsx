@@ -35,6 +35,29 @@ function Exercise({ exercise, guess, onGuessChange}) {
   );
 }
 
+function SingleScore( exercise, guess ) {
+  const isCorrect = exercise.answer.toLowerCase() === guess.trim().toLowerCase();
+  return isCorrect;
+}
+
+function getScores(exercises, guesses) {
+  return exercises.filter((exercise, i) => SingleScore(exercise, guesses[i])).length;
+}
+
+function AnswerDisplay({ exercises, guesses }) {
+  return (
+    <div className="answer-display">
+      {exercises.map((exercise, i) => (
+        <p key={i} className={SingleScore(exercise, guesses[i]) ? "correct-answer" : "incorrect-answer"}>
+          Your answer: {guesses[i]} - Correct answer: {exercise.answer}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+
+
 function App() {
   const [exercises, setExercises] = useState([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
@@ -65,11 +88,6 @@ function App() {
     setGuesses(Array(built.length).fill(""));
     setExercises(built);
   }
-
-  function getScores(exercises, guesses) {
-    return exercises.filter((exercise, i) => exercise.answer.toLowerCase() === guesses[i].trim().toLowerCase()).length;
-  }
- 
 
   return (
     <main className="App">
@@ -107,9 +125,12 @@ function App() {
           Check Score
         </button>
         {showScore && (
-          <p className="score-display">
-            Your score: {getScores(exercises, guesses)} / {exercises.length}
-          </p>
+          <>
+            <p className="score-display">
+              Your score: {getScores(exercises, guesses)} / {exercises.length}
+            </p>
+            <AnswerDisplay exercises={exercises} guesses={guesses} />
+          </>
         )}
       </div>
     </main>

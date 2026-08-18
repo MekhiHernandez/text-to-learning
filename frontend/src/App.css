@@ -61,3 +61,11 @@
   font-size: 16px;
   padding-left: 8px;
 }
+
+.correct-answer {
+  color: var(--correct);
+}
+
+.incorrect-answer {
+  color: var(--incorrect);
+}
