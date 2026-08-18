@@ -13,5 +13,5 @@ Backend API is working, frontend UI is built out with React and connected, and a
 - [x] Add exercise generation endpoint
 - [x] React frontend 
 - [x] Answer checking 
-- [] Polish UI
-- [] grammar explanations
+- [ ] Polish UI
+- [ ] grammar explanations
