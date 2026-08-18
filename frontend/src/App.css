@@ -14,3 +14,29 @@
 .entry-box {
   padding: 12px;
 }
+
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  @media (max-width: 1024px) {
+    gap: 8px;
+  }
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: #055a63;   /* pick your color */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #044249;
+}

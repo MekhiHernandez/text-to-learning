@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import './App.css'
 
-function EntryBox() {
+function EntryBox({ onSubmit }) {
   const [textValue, setTextValue] = useState('');
 
   return (
-    <div>
+    <div className="entry-form">
       <textarea
         className="entry-box"
         value = {textValue}
@@ -14,6 +14,9 @@ function EntryBox() {
         cols = {80}
         placeholder = "Enter Spanish text here..."
         />
+      <button className="submit-button" onClick={() => onSubmit(textValue)}>
+        Generate exercises
+      </button>
     </div>
   );
 }
@@ -38,10 +41,14 @@ const EXERCISES = [
 ]
 
 function App() {
+  function handleSubmit(text) {
+    console.log("Submitted text:", text);
+  }
+
   return (
     <main className="App">
       <h1>Text-to-Learning</h1>
-      <EntryBox />
+      <EntryBox onSubmit={handleSubmit} />
       <ExerciseList exercises={EXERCISES} />
     </main>
   )
