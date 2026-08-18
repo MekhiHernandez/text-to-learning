@@ -18,10 +18,23 @@ function EntryBox() {
   );
 }
 
-function ExercisesList({ exercises }) {}
+function ExerciseList({ exercises }) {
+  return (
+    <div className="exercise-list">
+      {exercises.map((exercise, index) => (
+        <Exercise key={index} exercise={exercise} />
+      ))}
+    </div>
+  );
+}
+
+function Exercise({ exercise }) {
+  return (<p>{exercise.preVerb} {exercise.maskedVerb} {exercise.postVerb}</p>);
+}
 
 const EXERCISES = [
-  {preVerb: "", maskedVerb: "", postVerb: ""}
+  {preVerb: "Ayer yo", maskedVerb: "comer", postVerb: "la manzana que me dio mi madre."},
+  {preVerb: "Mañana tú", maskedVerb: "estudiar", postVerb: "para el examen de matemáticas."},
 ]
 
 function App() {
@@ -29,6 +42,7 @@ function App() {
     <main className="App">
       <h1>Text-to-Learning</h1>
       <EntryBox />
+      <ExerciseList exercises={EXERCISES} />
     </main>
   )
 }
