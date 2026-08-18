@@ -87,6 +87,8 @@ function App() {
     });
     setGuesses(Array(built.length).fill(""));
     setExercises(built);
+    setCurrentExerciseIndex(0);
+    setShowScore(false);
   }
 
   return (
