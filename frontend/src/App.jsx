@@ -59,7 +59,12 @@ function AnswerDisplay({ exercises, guesses }) {
   );
 }
 
-
+function JoinTokens(tokens) {
+  return tokens
+    .join(" ")
+    .replace(/ ([.,;:!?%)\]}»])/g, "$1")
+    .replace(/([¿¡(\[{«]) /g, "$1");
+}
 
 function App() {
   const [exercises, setExercises] = useState([]);
@@ -82,9 +87,9 @@ function App() {
     const built = data.exercises.map((tokens, i) => {
       const [maskIndex,answer] = data.answers[i];
       return {
-        preVerb: tokens.slice(0, maskIndex).join(" "),
+        preVerb: JoinTokens(tokens.slice(0, maskIndex)),
         maskedVerb: tokens[maskIndex].replaceAll("[","").replaceAll("]",""),
-        postVerb: tokens.slice(maskIndex + 1).join(" "),
+        postVerb: JoinTokens(tokens.slice(maskIndex + 1)),
         answer: answer
       }
     });
