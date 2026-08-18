@@ -126,9 +126,14 @@ function App() {
         </div>
       )}
       <div className="score-section">
-        <button onClick={() => setShowScore(true)}>
-          Check Score
-        </button>
+        <span className="button-container">
+          <button onClick={() => setShowScore(true)}>
+            Check Score
+          </button>
+          <button onClick={() => setShowScore(false)}>
+            Hide Answers
+          </button>
+        </span>
         {showScore && (
           <>
             <p className="score-display">
