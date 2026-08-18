@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import './App.css'
 
-const DEFAULT_TEXT = "Reemplaza este texto con tu propio texto en español para generar ejercicios de conjugación de verbos."
-"Asegúrate de que el texto contenga varios verbos para obtener mejores resultados (al menos más que 2)."
+const DEFAULT_TEXT = "Reemplaza este texto con tu propio texto en español para generar ejercicios de conjugación de verbos. " +
+                     "Asegúrate de que el texto contenga varios verbos para obtener mejores resultados (al menos más que 2).";
 
 function EntryBox({ onSubmit }) {
   const [textValue, setTextValue] = useState(DEFAULT_TEXT);
