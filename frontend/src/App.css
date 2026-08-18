@@ -40,3 +40,24 @@
 .submit-button:hover {
   background-color: #044249;
 }
+
+.exercise-card {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+  max-width: 800px;
+}
+
+.nav-buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.exercise-count {
+  color:#d5dbdb;
+  font-size: 16px;
+  padding-left: 8px;
+}
