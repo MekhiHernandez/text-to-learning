@@ -35,21 +35,35 @@ function Exercise({ exercise }) {
   return (<p>{exercise.preVerb} {exercise.maskedVerb} {exercise.postVerb}</p>);
 }
 
-const EXERCISES = [
-  {preVerb: "Ayer yo", maskedVerb: "comer", postVerb: "la manzana que me dio mi madre."},
-  {preVerb: "Mañana tú", maskedVerb: "estudiar", postVerb: "para el examen de matemáticas."},
-]
-
 function App() {
-  function handleSubmit(text) {
-    console.log("Submitted text:", text);
+  const [exercises, setExercises] = useState([]);
+
+  async function handleSubmit(text) {
+    const response = await fetch("http://localhost:8000/create_exercises", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    const data = await response.json();
+
+    const built = data.exercises.map((tokens, i) => {
+      const [maskIndex,answer] = data.answers[i];
+      return {
+        preVerb: tokens.slice(0, maskIndex).join(" "),
+        maskedVerb: tokens[maskIndex].replaceAll("[","").replaceAll("]",""),
+        postVerb: tokens.slice(maskIndex + 1).join(" "),
+        answer: answer
+      }
+    });
+    setExercises(built);
   }
+ 
 
   return (
     <main className="App">
       <h1>Text-to-Learning</h1>
       <EntryBox onSubmit={handleSubmit} />
-      <ExerciseList exercises={EXERCISES} />
+      <ExerciseList exercises={exercises} />
     </main>
   )
 }
